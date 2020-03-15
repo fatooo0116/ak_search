@@ -1,24 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import SearchDetail from './components/SearchDetail';
+import SearchHome from './components/SearchHome';
+import './scss/compose.scss';
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Prompt
+} from "react-router-dom";
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div id="app_seach">
+     
+
+    <Router>
+      <Switch>
+        <Route path="/" exact children={ <SearchHome /> } />
+        <Route path="/search" children={ <SearchDetail /> } />       
+      </Switch>
+      </Router>      
     </div>
   );
 }
