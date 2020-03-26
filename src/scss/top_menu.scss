@@ -1,0 +1,48 @@
+
+    .main_search{
+        width: 100%;
+        max-width: 800px;
+        margin: auto;
+
+        .search_box{
+            width:100%;
+            display: flex;
+            align-items: center;
+            border: 1px solid  rgba(0, 0, 0, 0.23);
+            border-radius: 5px;
+            .main_search_input{
+                width:100%;
+                input{
+                    font-size: 20px;
+                    height: 50px;
+                    padding: 0 15px ! important;
+                }
+            }
+
+
+            .MuiOutlinedInput-root{
+                .MuiTextField-root input{
+                    width:calc(100% - 170px);
+                }
+            }
+            .MuiFormControl-root{          
+                .MuiSelect-root{
+                    width: 120px;;
+                }
+                .MuiOutlinedInput-notchedOutline,
+                .MuiInputBase-formControl{
+                    border:0px;                
+                }
+            }
+            .MuiInput-underline:before{
+                border-bottom:0px;
+            }
+            button{
+                width:50px;
+                background:none;
+                border:0px;
+                outline:0px;
+            }
+        }
+    }
+

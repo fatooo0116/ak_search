@@ -1,6 +1,7 @@
 import React from 'react';
 import SearchDetail from './components/SearchDetail';
 import SearchHome from './components/SearchHome';
+import SearchList from './components/SearchList';
 import './scss/compose.scss';
 
 import {
@@ -19,8 +20,9 @@ function App() {
 
     <Router>
       <Switch>
-        <Route path="/" exact children={ <SearchHome /> } />
-        <Route path="/search" children={ <SearchDetail /> } />       
+        <Route path="/" exact children={ <SearchHome /> } />        
+        <Route path="/search" children={ <SearchList /> } />       
+        <Route path="/detail/:id" children={ <SearchDetail /> } />       
       </Switch>
       </Router>      
     </div>
