@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField';
 
 import  axios from 'axios';
 
-import SearchBox from './SearchBox';
+import SearchBoxContainer from './components/SearchBoxContainer';
 
 class ReactHome extends React.Component {
   constructor(props) {
@@ -25,28 +25,9 @@ class ReactHome extends React.Component {
 
 
 
-  callSearchApi(e){
+  callSearchApi(e){ }  
 
-    let searchText = this.state.searchText;    
-    const headers = {
-      'Content-Type': 'application/json',     
-    }    
-
-    if(searchText !=''){
-      axios.post('http://127.0.0.1:3000/api/search',{
-        query:'賠償',
-        option:"text",
-        page:0
-      },{
-         headers: headers
-       }).then(function(res){
-        console.log(res);
-      }).catch(function (error) {
-        console.log(error);
-      });
-    }
-
-  }
+  
 
 
 
@@ -54,7 +35,7 @@ class ReactHome extends React.Component {
     render() {
         return (
           <div className="search_home">
-              <SearchBox />
+              <SearchBoxContainer />
 
           </div>
         );

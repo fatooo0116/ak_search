@@ -1,0 +1,17 @@
+.search_app{
+
+    .search_detail{
+        display:flex;
+        width:100%;
+        padding:136px 15px;
+        .toolbar{
+            min-width: 285px;;
+            padding:0 15px;
+        }
+        .main_article{
+            background:#fff;
+            width:calc(100% - 285px);
+            padding:0 15px;
+        }
+    }
+}

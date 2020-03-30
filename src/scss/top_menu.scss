@@ -42,6 +42,11 @@
                 background:none;
                 border:0px;
                 outline:0px;
+                
+                height: 30px;
+                &:hover{
+                    fill:#bf0000;
+                }
             }
         }
     }
