@@ -85,6 +85,13 @@ app.get('*', (req, res) => {
 });
 
 
+app.get('/search', (req, res) => {
+  res.sendFile(path.join(__dirname + '/build/index.html'));
+});
+
+
+
+
 const httpServer = http.createServer(app);
 httpServer.listen(3000);
 console.log('Server started!');

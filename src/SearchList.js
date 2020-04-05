@@ -44,6 +44,10 @@ class SearchList extends React.Component{
       this.props.listData.hits.hits.forEach(function(item){
         tpl.push(<article key={item._id} className="single-event">
                     <h3><Link to={"/detail/"+item._id}>{item._source.title}</Link></h3>
+                    <div classNAme="time">{item._source.time}</div>
+                    <div className="excerpt">
+                      {item.highlight.text}
+                    </div>
                   </article>);
       });
      }

@@ -34,6 +34,7 @@ import axios from 'axios';
       },
 
       onSearchByText:(input) =>{
+
         console.log(input);        
         axios.post('http://127.0.0.1:3000/api/search',{
           query:'賠償',
@@ -49,7 +50,10 @@ import axios from 'axios';
         }).catch(function (error) {
           console.log(error);
         });
+      },
 
+      resetRedirect(){
+        dispatch(seachActionF());
       },
 
       initRedirect:()=>{
