@@ -17,6 +17,15 @@ export function changeInput(input){
 }
 
 
+export function selectChange(value){
+    return {
+        type: 'SELECT_CHANGE',
+        selectValue:value
+    }
+}
+
+
+
 export function seachActionT(data){
     return {
         type: 'SEACH_TEXT_TRUE',    
@@ -40,6 +49,13 @@ export function add(){
 };
 
 
+
+export function initPageData(data){
+    return {
+        type: 'PAGE_INIT',
+        data:data
+    }
+}
 
 
 

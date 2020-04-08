@@ -1,6 +1,6 @@
 
 import { connect } from 'react-redux'
-import { add, sub ,changeInput,seachActionT,seachActionF } from '../actions/action.js';
+import { selectChange ,changeInput,seachActionT,seachActionF } from '../actions/action.js';
 import SearchBox from './SearchBox';
  
 import axios from 'axios';
@@ -12,7 +12,9 @@ import axios from 'axios';
       return {
         value : state.calculator.value,      
         input : state.changeInput.input,  
-        isSearchAction : state.changeInput.isSearchAction  
+        isSearchAction : state.changeInput.isSearchAction,
+        selectValue:state.changeInput.selectValue,
+        paged:0
       }
     }
   
@@ -33,13 +35,16 @@ import axios from 'axios';
         dispatch(changeInput(input));
       },
 
-      onSearchByText:(input) =>{
+      onSearchByText:(input,selected,paged) =>{
 
-        console.log(input);        
+        
+
+        // console.log(input);        
+
         axios.post('http://127.0.0.1:3000/api/search',{
-          query:'賠償',
-          option:"text",
-          page:0
+          query: input,
+          option:selected,
+          page:paged
         },{
            headers: headers
          }).then(function(res){
@@ -52,6 +57,12 @@ import axios from 'axios';
         });
       },
 
+
+      onSelectChange(value){        
+        dispatch(selectChange(value));
+      },
+
+
       resetRedirect(){
         dispatch(seachActionF());
       },
@@ -62,16 +73,9 @@ import axios from 'axios';
 
 
 
-      
-      onClickAdd: () => {
-        dispatch(add());
-        // dispatch(earchByText());
-        // alert("xxx");
-        // window.location = '/search'
-      },
-      onClickSub: () =>{
-        dispatch(sub());
-      }
+
+
+
     }
   }
 

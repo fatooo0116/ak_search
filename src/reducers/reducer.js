@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import { PLUS, MINUS } from '../actions/action.js';
+import axios from 'axios';
 
 const initialData = {
     value : 0,
@@ -8,11 +9,17 @@ const initialData = {
 const searchInitialData = {
   input : '',
   isSearchAction:false,
-  outPutData:[]
+  outPutData:[],
+  selectValue:'text'
 }
 
-/*
+const pageData = {
+  data:''
+}
 
+
+
+/*
     let searchText = this.state.searchText;    
     const headers = {
       'Content-Type': 'application/json',     
@@ -33,6 +40,22 @@ const searchInitialData = {
     }
 
 */
+
+
+function pageInit(state = pageData, action){
+  switch(action.type){
+    case('PAGE_INIT'):          
+    
+      
+      return Object.assign({},state,{
+        data : action.data
+      });
+
+
+    default:
+      return state
+  }
+}
 
 
 
@@ -59,12 +82,20 @@ function changeInput(state = searchInitialData, action){
             isSearchAction : false
           });          
 
-
+        case('SELECT_CHANGE'):      
+        
+        console.log(action.selectValue);
+        
+          return Object.assign({},state,{
+            isSearchAction : action.selectValue
+          });   
 
         default:
           return state
     }
   }
+
+
 
 
 
@@ -87,9 +118,11 @@ function calculator(state = initialData, action){
 }
 
 
+
 const calculatorApp = combineReducers({
     changeInput,
-    calculator
+    calculator,
+    pageInit,
 });
 
 export default calculatorApp;

@@ -1,5 +1,5 @@
 import React from 'react';
-import SearchDetail from './SearchDetail';
+import SearchDetailContainer from './SearchDetailContainer';
 import SearchHome from './SearchHome';
 import SearchListContainer from './SearchListContainer';
 import './scss/compose.scss';
@@ -20,6 +20,14 @@ import {
 let store = createStore(reducer);
 
 
+const Child = ({ match }) => (
+  <div>   
+    <SearchDetailContainer pid={match.params.id} />
+  </div>
+)
+
+
+
 function App() {
   return (
     <div id="app_seach">
@@ -28,7 +36,7 @@ function App() {
             <Switch>
             <Route path="/" exact children={ <SearchHome /> } />        
             <Route path="/search/" children={ <SearchListContainer /> } />       
-            <Route path="/detail/:id" children={ <SearchDetail /> } />       
+            <Route path="/detail/:id" children={Child} />       
             </Switch>
           </Router>    
         </Provider>  

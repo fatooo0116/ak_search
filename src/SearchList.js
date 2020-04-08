@@ -35,6 +35,9 @@ class SearchList extends React.Component{
 
     console.log(this.props.listData);
     let tpl = [];
+    let state_law = [];
+    let state_element = [];
+
     if(this.props.listData.hasOwnProperty('hits')){
       /*
       this.props.listData.htis.hits.forEach(function(item){
@@ -45,12 +48,43 @@ class SearchList extends React.Component{
         tpl.push(<article key={item._id} className="single-event">
                     <h3><Link to={"/detail/"+item._id}>{item._source.title}</Link></h3>
                     <div classNAme="time">{item._source.time}</div>
-                    <div className="excerpt">
-                      {item.highlight.text}
-                    </div>
+                    <div className="excerpt"
+                        dangerouslySetInnerHTML={{
+                          __html: item.highlight.text
+                        }}></div>
                   </article>);
       });
+      this.props.listData.aggregations.count_stats_law.buckets.forEach(function(item,i){
+        if(i<5){
+          state_law.push(
+            <ListItem button>
+                          <ListItemText primary={item.key} />
+                        </ListItem>
+          );
+        }
+      });
+      this.props.listData.aggregations.count_stats_element.buckets.forEach(function(item,i){
+        if(i<5){
+          state_element.push(
+            <ListItem button>
+                          <ListItemText primary={item.key} />
+                        </ListItem>
+          );
+        }
+      });
      }
+
+  
+     
+
+     /*
+     this.props.listData.aggregations.count_stats_element.buckets.forEach(function(item){
+      console.log(item);
+     });
+     */
+
+
+
     
 
     return (
@@ -62,30 +96,22 @@ class SearchList extends React.Component{
           <div className="main">
             <div className="inner">
               <div className="main_list">     
-                  {tpl}
-                  <article className="single-event">                 
-                    <h3><Link to="/detail/112">this is title</Link></h3>
-                    <div className="excerpt">
-                    FILING DATE FIRST NAMED INVENTOR ATTORNEY DOCKET NO. CONFIRMATION NO. 13/022,809 02/08/2011 Robert F. Hurt M190.249.103 7432 63496 7590 01/31/2017 DICKE, BILLIG & CZAJA, PLLC ATTN: MDT SURGICAL TECHNOLOGIES
-                    <br/>
-                    UNITED STATES PATENT AND TRADEMARK OFFICE BEFORE THE PATENT TRIAL AND APPEAL BOARD Ex parte ROBERT F. HURT Appeal 2015-004011 Application 13/022,809 Technology Center 3700 Before JENNIFER D. BAHR, LINDA
-                    </div>
-                  </article>
-  
-  
-                                          
+                  {tpl}                                          
               </div>
               <div className="filter">
                   <Card >
                     <CardContent>
-                      <ListItem button>
-                        <ListItemText primary="I法條第103迢遞款" />
-                      </ListItem>
-                      <ListItem button>
-                        <ListItemText primary="I法條第103迢法條第103迢遞遞款第三項" />
-                      </ListItem>                
+                      {state_law}            
                     </CardContent>
                   </Card>
+
+
+                  <Card >
+                    <CardContent>
+                      {state_element}              
+                    </CardContent>
+                  </Card>
+
               </div> { /*  filter  */  }
   
             </div> { /*  inner  */  }
