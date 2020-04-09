@@ -47,7 +47,7 @@ class SearchList extends React.Component{
       this.props.listData.hits.hits.forEach(function(item){
         tpl.push(<article key={item._id} className="single-event">
                     <h3><Link to={"/detail/"+item._id}>{item._source.title}</Link></h3>
-                    <div classNAme="time">{item._source.time}</div>
+                    <div className="time">{item._source.time}</div>
                     <div className="excerpt"
                         dangerouslySetInnerHTML={{
                           __html: item.highlight.text
@@ -94,7 +94,7 @@ class SearchList extends React.Component{
   
           { /*  main data / left filter / right List */}
           <div className="main">
-            <div className="inner">
+            <div className="inner clearfix">
               <div className="main_list">     
                   {tpl}                                          
               </div>
@@ -115,6 +115,8 @@ class SearchList extends React.Component{
               </div> { /*  filter  */  }
   
             </div> { /*  inner  */  }
+
+            <Pagination count="5" defaultPage={2}  page={2}  variant="outlined" shape="rounded" onChange={(page ,value)=> console.log(value) }  />
           </div>
       </div>
     );

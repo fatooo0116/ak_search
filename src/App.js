@@ -26,6 +26,10 @@ const Child = ({ match }) => (
   </div>
 )
 
+const ChildSearch = ({ match })=>(
+  <SearchListContainer pid={match.params.id} />
+)
+
 
 
 function App() {
