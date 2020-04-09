@@ -8,6 +8,23 @@ export const MINUS = 'MINUS';
 // action creators
 
 
+export function updateSearchList(data){
+    return {
+        type: 'UPDATE_SEARCH_LIST',
+        data:data
+    }
+}
+
+
+
+export function changePage(num){
+    return {
+        type: 'CHANGE_PAGE',
+        num:num
+    }
+}
+
+
 
 export function changeInput(input){
     return {

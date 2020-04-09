@@ -35,11 +35,7 @@ import axios from 'axios';
         dispatch(changeInput(input));
       },
 
-      onSearchByText:(input,selected,paged) =>{
-
-        
-
-        // console.log(input);        
+      onSearchByText:(input,selected,paged) =>{       
 
         axios.post('http://127.0.0.1:3000/api/search',{
           query: input,

@@ -32,11 +32,13 @@ class SearchList extends React.Component{
 
 
   render(){
-
-    console.log(this.props.listData);
+    let me = this;
+    
     let tpl = [];
     let state_law = [];
     let state_element = [];
+
+    var xpagination = '';
 
     if(this.props.listData.hasOwnProperty('hits')){
       /*
@@ -72,9 +74,16 @@ class SearchList extends React.Component{
           );
         }
       });
+
+      
+      let allpage =  Math.ceil(this.props.listData.hits.total.value/10);
+      let  pageValue = (this.props.pageValue) ? this.props.pageValue:1;
+       console.log(pageValue);
+       xpagination  = <Pagination count={allpage}  page={pageValue}  variant="outlined" shape="rounded" onChange={(page ,value)=> me.props.changePage(value,me.props.keyinput,me.props.selectValue) }  /> ;
+
      }
 
-  
+   
      
 
      /*
@@ -84,8 +93,7 @@ class SearchList extends React.Component{
      */
 
 
-
-    
+   
 
     return (
       <div className="search_app">
@@ -116,7 +124,8 @@ class SearchList extends React.Component{
   
             </div> { /*  inner  */  }
 
-            <Pagination count="5" defaultPage={2}  page={2}  variant="outlined" shape="rounded" onChange={(page ,value)=> console.log(value) }  />
+          { xpagination }
+            
           </div>
       </div>
     );

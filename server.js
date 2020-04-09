@@ -38,9 +38,9 @@ app.post('/api/search',(req, res) => {
       console.log('launch request');
 
 
-      var query = (req.body.query)? req.body.query: '賠償';
+      var query = (req.body.query)? req.body.query: '';
       var option = (req.body.option)? req.body.option : 'text';
-      var paged = (req.body.paged)? req.body.paged : 0;
+      var paged = (req.body.page)? req.body.page - 1  : 0;
      
       axios.post('http://23.97.66.207:6000/search',{
         query: query,

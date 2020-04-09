@@ -9,7 +9,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 
-import axios from 'axios';
 
 import './scss/search_detail.scss';
 
@@ -36,33 +35,16 @@ class  SearchDetail extends React.Component {
 
 
 
-  componentDidMount(){
-
-    let me = this; 
-
-    console.log(me.props.pid);
-
-    axios.post('http://127.0.0.1:3000/api/getPageById',{
-      key:me.props.pid,
-    }).then(function(res){
-
-      // console.log(res.data);
-      me.props.initPageData(res.data);
-
-    }).catch(function (error) {
-      console.log(error);
-    });
-    
-    
+  componentDidMount(){    
+    this.props.initPageData(this.props.pid);
   }
 
 
 
 
   render(){
-
     
-    const source = this.props.initData._source;
+    const source = this.props.pageData;
     console.log(source);
    
 
@@ -106,7 +88,7 @@ class  SearchDetail extends React.Component {
     }
     
     let rela_doc = [];                  
-    if(this.props.initData.related_doc){
+    if(this.props.initData){
         this.props.initData.related_doc.hits.hits.forEach(function(item){
           rela_doc.push(<li><a href={'/detail/'+item._id}>{item._source.title}</a></li>);
       });

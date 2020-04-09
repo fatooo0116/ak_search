@@ -10,7 +10,8 @@ const searchInitialData = {
   input : '',
   isSearchAction:false,
   outPutData:[],
-  selectValue:'text'
+  selectValue:'text',
+  pageValue:0
 }
 
 const pageData = {
@@ -19,34 +20,12 @@ const pageData = {
 
 
 
-/*
-    let searchText = this.state.searchText;    
-    const headers = {
-      'Content-Type': 'application/json',     
-    }    
-
-    if(searchText !=''){
-      axios.post('http://127.0.0.1:3000/api/search',{
-        query:'賠償',
-        option:"text",
-        page:0
-      },{
-         headers: headers
-       }).then(function(res){
-        console.log(res);
-      }).catch(function (error) {
-        console.log(error);
-      });
-    }
-
-*/
 
 
 function pageInit(state = pageData, action){
   switch(action.type){
-    case('PAGE_INIT'):          
-    
-      
+    case('PAGE_INIT'):
+
       return Object.assign({},state,{
         data : action.data
       });
@@ -82,13 +61,23 @@ function changeInput(state = searchInitialData, action){
             isSearchAction : false
           });          
 
-        case('SELECT_CHANGE'):      
-        
-        console.log(action.selectValue);
-        
+        case('SELECT_CHANGE'):              
+        //console.log(action.selectValue);        
           return Object.assign({},state,{
             isSearchAction : action.selectValue
           });   
+
+        case('CHANGE_PAGE'):
+          return Object.assign({},state,{
+            pageValue : action.num
+          });   
+
+
+        case('UPDATE_SEARCH_LIST'):
+          return Object.assign({},state,{
+            outPutData: action.data  
+          });   
+
 
         default:
           return state

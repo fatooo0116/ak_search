@@ -13,9 +13,9 @@ import SearchDetail from './SearchDetail';
 
 
 const mapStateToProps = (state) => {  
-
+ 
   return {
-    initData : state.pageInit.data,        
+    pageData : state.pageInit.data,        
    
   }
 }
@@ -25,14 +25,22 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
 
-    //  onSearchByText:(input) =>{
-    //   console.log(input);        
-    //  },
-      
-      initPageData:(data) => {
-        dispatch(initPageData(data))
-      }
-     
+      initPageData:(pid) => {
+
+        let me = this;
+        axios.post('http://127.0.0.1:3000/api/getPageById',{
+          key:pid,
+        }).then(function(res){
+    
+          console.log(res.data._source);
+          dispatch(initPageData(res.data._source));
+    
+        }).catch(function (error) {
+          console.log(error);
+        });
+
+        
+      }     
     }
 }
 

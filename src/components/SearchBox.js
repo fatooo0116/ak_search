@@ -23,11 +23,11 @@ class SearchBox extends React.Component{
 
   render(){
 
-    const searchUrl = '/search/'+this.props.input;
-    const redirectPage = (this.props.isSearchAction) ?  <><Redirect to={searchUrl} />123</>  :'';
-    if((this.props.isSearchAction)){
-      this.props.resetRedirect();
-    }
+  //  const searchUrl = '/search/'+this.props.input;
+  //  const redirectPage = (this.props.isSearchAction) ?  <><Redirect to={searchUrl} />123</>  :'';
+  //  if((this.props.isSearchAction)){
+  //    this.props.resetRedirect();
+  //  }
 
 
     return(
@@ -45,7 +45,7 @@ class SearchBox extends React.Component{
             </svg>
           </button>
 
-          { redirectPage }
+          { /* redirectPage  */ }
       </div>     
     </form>
     )
