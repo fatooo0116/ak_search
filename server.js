@@ -62,6 +62,49 @@ app.post('/api/search',(req, res) => {
       //return 'OK';
 });
 
+
+
+
+
+app.post('/api/f_search',(req, res) => {
+
+      const headers = {
+         'Content-Type': 'application/json',     
+      }    
+    
+      console.log('advance Search request');
+
+
+      var query = (req.body.query)? req.body.query: '';
+      var option = (req.body.option)? req.body.option : 'text';
+      var paged = (req.body.page)? req.body.page - 1  : 0;
+      var alaw = (req.body.alaw)? req.body.alaw : '';
+     
+      axios.post('http://23.97.66.207:6000/f_search',{
+        query: query,
+        option: option,
+        page: paged,
+        law:alaw,
+        history:[]
+      },{
+         headers: headers
+       }).then(function(resx){
+  
+
+        res.send(resx.data);
+        
+      }).catch(function (error) {
+         console.log(error);
+      });
+      
+
+      //return 'OK';
+});
+
+
+
+
+
 /*  SSR  */
 app.post('/api/getPageById',(req, res) => {
 

@@ -33,10 +33,13 @@
 
     .main{
         width:100%;
-        padding:136px 15px;
+        flex-wrap: wrap;
+        min-height: calc(100vh - 170px);
         display:flex;
         background: #f5f5f5;
         flex-wrap: wrap;
+        padding-top: 120px;
+        padding-bottom: 50px;
 
 
         .MuiPagination-root{
@@ -48,12 +51,15 @@
             width:100%;
             padding:0 15px;
             display:flex;
-            max-width: 950px;;
+            max-width: 1024px;
             margin-left:auto;
             margin-right:auto;
+            position: relative;
+
+            
             .main_list{
-                width:calc(100% - 250px);
-                padding:0 20px 0 0;
+                width:calc(100% - 280px);
+                padding:0 50px 0 0;
 
                 article.single-event{
                     display:block;
@@ -61,15 +67,26 @@
                     h3{
                         font-size:21px;
                         color: #005aaa;
+                        margin:10px 0px 5px;
+                    }
+                    .time{
+                        margin:10px;
                     }
                     .excerpt{
                         font-size:16px;
                         line-height: 1.8em;;
+                        em{
+                            background: #e0d9d9;
+                            padding: 1px;
+                        }
                     }
                 }
             }
             .filter{
-                width:250px;
+                width: 250px;
+                position: absolute;
+                right: 0;
+
                // background:#eee;
                .MuiList-padding{
                    background:#fff;
@@ -86,6 +103,19 @@
                }
                .MuiCardContent-root{
                    padding:8px 8px;
+                   h3{
+                       padding:5px;
+                       font-weight: 400;;
+                       margin:0;
+                       color:#000;
+                   }
+                   .MuiListItem-button span{
+                       color:#555;
+                       &:hover{
+                           color:#000;
+                           border-radius: 5px;;
+                       }
+                   }
                }
                .MuiCard-root{
                    margin-bottom:20px;

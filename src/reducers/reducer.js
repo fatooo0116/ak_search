@@ -7,16 +7,60 @@ const initialData = {
 }
 
 const searchInitialData = {
-  input : '',
+  input:'',
   isSearchAction:false,
   outPutData:[],
   selectValue:'text',
-  pageValue:0
+  pageValue:0,
+  ad_text:'',
+  is_advance_search:false
 }
 
 const pageData = {
   data:''
 }
+
+
+
+
+
+
+
+
+
+// Reducer
+function homeSearchbox(state = searchInitialData, action){
+  switch(action.type){
+
+
+      case('HOME_TEXT_CHANGE'):
+        return Object.assign({},state,{
+          input: action.input
+        });
+
+      case('HOME_SEARCH_SUBMIT'):
+
+        console.log(action);
+
+        return Object.assign({},state,{
+          input : action.input,
+          selectValue:action.selectValue,
+          isSearchAction:action.isSearchAction,
+          is_advance_search:false,
+        });  
+      
+
+      case('HOME_SELECT_CHANGE'):
+      return Object.assign({},state,{       
+        selectValue:action.value     
+      });
+
+      default:
+        return state
+      }
+    }
+
+
 
 
 
@@ -44,10 +88,23 @@ function pageInit(state = pageData, action){
 // Reducer
 function changeInput(state = searchInitialData, action){
     switch(action.type){
+
+
+        case('ADVANCE_SEARCH'):
+          return Object.assign({},state,{
+            ad_text: action.ad_text,
+            input : action.input,
+            outPutData:action.data,
+            pageValue: action.paged
+          });
+
+
         case('UPDATE_INPUT'):          
          // console.log(state);
           return Object.assign({},state,{
-            input : action.input
+            input : action.input,
+            is_advance_search:false,
+            pageValue:0
           });
 
         case('SEACH_TEXT_TRUE'):          
@@ -74,9 +131,18 @@ function changeInput(state = searchInitialData, action){
 
 
         case('UPDATE_SEARCH_LIST'):
-          return Object.assign({},state,{
+          return Object.assign({},state,{         
             outPutData: action.data  
           });   
+
+
+        case('UPDATE_URL_SEARCH_LIST'):
+          return Object.assign({},state,{
+            input:action.text,
+            outPutData: action.data           
+          });  
+
+         
 
 
         default:
@@ -112,6 +178,7 @@ const calculatorApp = combineReducers({
     changeInput,
     calculator,
     pageInit,
+    homeSearchbox
 });
 
 export default calculatorApp;

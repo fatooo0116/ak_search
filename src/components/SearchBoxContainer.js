@@ -59,13 +59,9 @@ import axios from 'axios';
       },
 
 
-      resetRedirect(){
-        dispatch(seachActionF());
-      },
 
-      initRedirect:()=>{
-        dispatch(seachActionF());
-      },
+
+ 
 
 
 

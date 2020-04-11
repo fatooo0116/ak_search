@@ -15,23 +15,17 @@ import {
 class SearchBox extends React.Component{
   constructor(props){
     super(props);
-    if(window.location.pathname.indexOf('search')>0){
-      this.props.initRedirect();
-    }   
+
   }
 
 
   render(){
 
-  //  const searchUrl = '/search/'+this.props.input;
-  //  const redirectPage = (this.props.isSearchAction) ?  <><Redirect to={searchUrl} />123</>  :'';
-  //  if((this.props.isSearchAction)){
-  //    this.props.resetRedirect();
-  //  }
+
 
 
     return(
-      <form method="get"  action="/search"   className="main_search">
+      <form method="get"     className="main_search">
       <div className="search_box">    
           <TextField id="outlined-basic"  value={this.props.input}   onChange={ (input) => this.props.onChangeInput(input.target.value) }  className="main_search_input" label="" variant="outlined" />
           <FormControl >
