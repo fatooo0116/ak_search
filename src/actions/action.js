@@ -9,6 +9,59 @@ export const MINUS = 'MINUS';
 
 
 
+export function detail_model_open(text){
+    return {
+        type:'DETAIL_MODAL_OPEN',
+        text:text
+    }
+}
+
+export function detail_model_close(){
+    return {
+        type:'DETAIL_MODAL_CLOSE'          
+    }
+}
+
+
+export function remove_ad_text(){
+    return {
+        type:'REMOVE_AD_TEXT',        
+    }
+}
+
+export function detail_load_begin(){
+    return {
+        type:'DETAIL_LOADING_ACTION',
+        status:true
+    }
+}
+
+
+export function detail_load_end(){
+    return {
+        type:'DETAIL_LOADING_ACTION',
+        status:false
+    }
+}
+
+
+export function load_begin(){
+    return {
+        type:'LOADING_ACTION',
+        status:true
+    }
+}
+
+
+export function load_end(){
+    return {
+        type:'LOADING_ACTION',
+        status:false
+    }
+}
+
+
+
 export function dvanceSearch(ad_text,input,data,paged){
     return {
         type:'ADVANCE_SEARCH',
@@ -94,9 +147,10 @@ export function selectChange(value){
 
 
 
-export function seachActionT(data){
+export function seachActionT(input,data){
     return {
-        type: 'SEACH_TEXT_TRUE',    
+        type: 'SEACH_TEXT_TRUE',  
+        input:input,  
         data: data   
     }
 }
@@ -122,6 +176,14 @@ export function initPageData(data){
     return {
         type: 'PAGE_INIT',
         data:data
+    }
+}
+
+export function pageDetailMark(data,main_text){
+    return {
+        type: 'PAGE_DETAIL_MARK',
+        data:data,
+        main_text:main_text
     }
 }
 

@@ -4,7 +4,6 @@ import ListItem from '@material-ui/core/ListItem';
 
 import ListItemText from '@material-ui/core/ListItemText';
 
-import CircularProgress from '@material-ui/core/CircularProgress';
 
 // import InboxIcon from '@material-ui/icons/Inbox';
 // import DraftsIcon from '@material-ui/icons/Drafts';
@@ -14,12 +13,25 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Pagination from '@material-ui/lab/Pagination';
 import TopMenu from './components/TopMenu';
-
 import './scss/search_list.scss';
+
+
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+import Chip from '@material-ui/core/Chip';
+
+
 
 import {
   Link
 } from "react-router-dom";
+
+import {  DirectLink, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
+
+
+
+
 
 
 class SearchList extends React.Component{
@@ -29,8 +41,8 @@ class SearchList extends React.Component{
 
   
 
-  componentDidMount(pid){    
-
+  componentDidMount(){    
+    console.log(this.props.path);
     this.props.initPageList(this.props.pid, this.props.selectValue);
   }
 
@@ -46,11 +58,6 @@ class SearchList extends React.Component{
 
 
     if(this.props.listData.hasOwnProperty('hits')){
-
-
-     console.log('render');
-
-
      
 
       this.props.listData.hits.hits.forEach(function(item){
@@ -63,6 +70,7 @@ class SearchList extends React.Component{
                         }}></div>
                   </article>);
       });
+
       this.props.listData.aggregations.count_stats_law.buckets.forEach(function(item,i){
         if(i<5){
           state_law.push(
@@ -72,6 +80,7 @@ class SearchList extends React.Component{
           );
         }
       });
+
       this.props.listData.aggregations.count_stats_element.buckets.forEach(function(item,i){
         if(i<5){
           state_element.push(
@@ -85,8 +94,8 @@ class SearchList extends React.Component{
       
       let allpage =  Math.ceil(this.props.listData.hits.total.value/10);
       let  pageValue = (this.props.pageValue) ? this.props.pageValue:1;
-       console.log(pageValue);
-       xpagination  = <Pagination count={allpage}  page={pageValue}  variant="outlined" shape="rounded" onChange={(page ,value)=> me.props.changePage(value, me.props.keyinput, me.props.selectValue, me.props.ad_text) }  /> ;
+       
+       xpagination  = (allpage)? <Pagination count={allpage}  page={pageValue}  variant="outlined" shape="rounded" onChange={(page ,value)=> {  me.props.changePage(value, me.props.keyinput, me.props.selectValue, me.props.ad_text);} }  /> :'' ;
 
      }
 
@@ -99,35 +108,42 @@ class SearchList extends React.Component{
      });
      */
 
+ 
 
    
+    setTimeout(function(){
+      scroll.scrollToTop({duration:100});
+    },100);
 
 
     return (
       <div className="search_app">
-        <TopMenu />
+        <TopMenu  path={this.props.path}   />
   
   
           { /*  main data / left filter / right List */}
           <div className="main">
             <div className="inner clearfix">
               <div className="main_list">     
-                  {(tpl.length>0)? tpl : <CircularProgress />}                                          
+                  {(tpl.length>0)? tpl : ''}                                          
               </div>
               <div className="filter">
-
+                 
+                  { (this.props.ad_text ) ?  
+                      <div className="tags"><Chip label={this.props.ad_text} onDelete={() =>{ this.props.removeAdText(this.props.keyinput, this.props.selectValue) }} color="primary" /></div> : ''  }   
                   
+
                   { (state_element.length > 0 ) ?  <Card ><CardContent><h3>相關要件</h3>{state_element}</CardContent></Card> : '' }
                   { (state_law.length > 0 ) ?  <Card ><CardContent><h3>相關法條</h3>{state_law}</CardContent></Card> : '' }
-
                   
-
               </div> { /*  filter  */  }
-  
             </div> { /*  inner  */  }
-
           { xpagination }
-            
+
+        
+          <Backdrop    open={this.props.loading_status} >
+            <CircularProgress  />
+          </Backdrop>
           </div>
       </div>
     );

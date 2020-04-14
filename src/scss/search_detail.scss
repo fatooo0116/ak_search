@@ -5,13 +5,127 @@
         width:100%;
         padding:136px 15px;
         .toolbar{
-            width: 285px;;
-            padding:0 15px;
+            width: 320px;
+            padding:0 15px 0 0;
+            color: #6c6e71;
+            position: fixed;
+            left: 15px;
+            overflow-y: scroll;
+            height: calc(100vh - 135px);
+            /* padding-bottom: 1150px; */
+            top: 85px;
+            padding-top: 50px;
+
             .maker_item{
+                position: relative;
                 margin-bottom: 20px;
-                label{
-                    font-weight:bold;
+                padding-top:30px;
+
+                .fact_modal{
+                    button{
+                        font-size:12px;
+                        margin:10px 0 0 0;
+                        display: block;
+                    }
                 }
+
+
+                .MuiFormControlLabel-root{
+                    margin-bottom: 5px;
+                    padding-left:5px;
+                    padding-right:5px;
+                    border-radius: 5px;;
+                    margin-right:0;
+                    margin-left: 0;
+                    line-height: 1em;
+                    &:hover{
+                        background-color: rgb(238,238,238);
+                        color:#333;
+                    }
+                    .MuiTypography-body1{
+                        line-height: 1.4em;
+                        font-size: 15px ! important;
+                    }
+                    .MuiButtonBase-root{
+                        
+                        padding: 2px 5px 2px 5px;                       
+                        margin-right: 0;
+                        margin-left: -5px;
+                    }
+                }
+
+
+                &:first-child:before{
+                    display:none;
+                }
+                &:first-child{
+                    padding-top:0;
+                    h3{
+                        margin-top:0;
+                        
+                    }
+                }
+                h4{
+                    color:#0072bc;
+                    font-size: 20px;
+                    font-weight:500;
+                    letter-spacing: 2px;
+                    margin-bottom: 10px;
+                    margin-top: 0;
+                    display: block;
+                   // font-family: 'Noto Serif TC', serif;
+                    .mark_type{
+                        font-weight:400;
+                        color: #6c6e71;
+                    }
+
+                }
+                &:before{
+                    content:"";
+                    position: absolute;
+                    top:0;
+                    width:100%;
+                    // left:5px;
+                    height:1px;
+                    background:#ccc;
+                }
+   
+                ul{
+                    padding:0;
+                    margin-bottom: 30px;;
+                    margin-top:0;
+                    list-style-type: none;
+                    li{
+                        padding:0;
+                        a{
+                            font-weight: 400;;
+                            line-height: 2em;;
+                            color: #484848;
+                            &:visited{
+                                // color:#005aaa;
+                            }
+                        }
+                    }
+                }
+                
+                ol{
+                    margin-top:0;
+                    padding-left: 20px;
+                    li{
+                        padding:0;
+                        margin-bottom: 5px;;
+                        a{
+                            font-weight: 300;;
+                           
+                            color: #484848;
+                            line-height: 1.4em;
+                            &:hover{
+                                font-weight: 400;;
+                            }
+                        }
+                    }
+                }
+
             }
         }
 
@@ -19,9 +133,34 @@
 
 
         .main_article{
-            background:#fff;
-            width:calc(100% - 285px);
-            padding:0 15px;
+            background: #f9f9f9;
+            width: calc(100% - 285px);
+            padding: 0 30px;
+          //  font-family: 'Noto Serif TC', serif;
+            letter-spacing: 0.03em;
+            line-height: 1.7em;
+            background: eee;
+            border-radius: 10px;
+            padding-bottom: 30px;
+            font-size: 17px;
+            margin-left: 330px;
+
+            h2{
+                font-weight: 400;
+                font-size: 35px;
+                line-height: 1.5em;;
+                text-align: center;
+            }
+            .date,
+            .reason{
+                color: #555;
+            }
+            
+
+            .main_text{
+                padding-top:10px;
+                line-height: 2em;;
+            }
         }
 
 
@@ -34,7 +173,24 @@
             }
         }
         .main_article{
-
+            .element{
+                display:inline;
+            }
+            #mk{
+                background-color: #96cefe;
+                padding: .125rem 0;
+            }
         }
     }
+
+
+}
+
+.ReactModal__Content.ReactModal__Content--after-open{
+    line-height: 2em ! important;
+    letter-spacing:1px ! important;
+    border-color: #fff ! important;
+}
+.ReactModal__Overlay.ReactModal__Overlay--after-open{
+    background-color: rgba(0, 0 ,0, 0.5) ! important;   
 }

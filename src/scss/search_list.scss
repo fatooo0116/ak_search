@@ -68,16 +68,32 @@
                         font-size:21px;
                         color: #005aaa;
                         margin:10px 0px 5px;
+                        a:hover{
+                            transition: 0.2s;;
+                            border-bottom: 2px solid #0667bd;
+                            background: none;
+                            margin: 0 -2px;
+                            padding: 0 2px;
+                        }
+                        a:visited:hover{
+                            border-color: #6a1b9a;
+                        }
+     
                     }
                     .time{
-                        margin:10px;
+                        margin: 10px 0;
+                        font-weight: 300;
+                        font-size: 15px;;
                     }
                     .excerpt{
                         font-size:16px;
                         line-height: 1.8em;;
+                        font-weight: 400;
+                        letter-spacing: 1px;
                         em{
-                            background: #e0d9d9;
-                            padding: 1px;
+                            background: linear-gradient(transparent 40%, rgba(255, 255, 255, 0) 40%, #FFF176 90%, transparent 95%);
+                            /* padding: 2px 1px; */
+                            font-style: normal;
                         }
                     }
                 }
@@ -86,6 +102,9 @@
                 width: 250px;
                 position: absolute;
                 right: 0;
+
+
+               .tags{ margin-bottom: 20px;; }
 
                // background:#eee;
                .MuiList-padding{

@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { PLUS, MINUS } from '../actions/action.js';
-import axios from 'axios';
+
 
 const initialData = {
     value : 0,
@@ -13,11 +13,16 @@ const searchInitialData = {
   selectValue:'text',
   pageValue:0,
   ad_text:'',
-  is_advance_search:false
+  is_advance_search:false,
+  loading_status:false
 }
 
 const pageData = {
-  data:''
+  data:'',
+  main_text:'',
+  maked:'',
+  modal_open: false,
+  model_text:''
 }
 
 
@@ -65,16 +70,40 @@ function homeSearchbox(state = searchInitialData, action){
 
 
 
-
+/*  page detail  initial   */
 function pageInit(state = pageData, action){
   switch(action.type){
     case('PAGE_INIT'):
-
+        let main_text = (action.data._source.text)? action.data._source.text :'';       
       return Object.assign({},state,{
-        data : action.data
+        data : action.data,
+        main_text: main_text,
+        maked:''        
       });
 
 
+    case('PAGE_DETAIL_MARK'):                
+      return Object.assign({},state,{
+        maked : action.data,
+        main_text: action.main_text
+      });
+
+
+      case('DETAIL_MODAL_OPEN'):                     
+        return Object.assign({},state,{
+          modal_open: true,
+          model_text: action.text
+        });
+      
+      
+      case('DETAIL_MODAL_CLOSE'):                
+      return Object.assign({},state,{
+        modal_open: false,
+        model_text:''
+      });      
+
+
+      
     default:
       return state
   }
@@ -89,6 +118,17 @@ function pageInit(state = pageData, action){
 function changeInput(state = searchInitialData, action){
     switch(action.type){
 
+        case('LOADING_ACTION'):
+          return Object.assign({},state,{
+            loading_status: action.status,          
+          });
+
+
+        case('DETAIL_LOADING_ACTION'):
+          return Object.assign({},state,{
+            detail_loading_status: action.status,          
+          });  
+      
 
         case('ADVANCE_SEARCH'):
           return Object.assign({},state,{
@@ -97,6 +137,12 @@ function changeInput(state = searchInitialData, action){
             outPutData:action.data,
             pageValue: action.paged
           });
+
+        case('REMOVE_AD_TEXT'):
+        return Object.assign({},state,{
+          ad_text: ''
+        });
+
 
 
         case('UPDATE_INPUT'):          
@@ -110,6 +156,7 @@ function changeInput(state = searchInitialData, action){
         case('SEACH_TEXT_TRUE'):          
           return Object.assign({},state,{
             isSearchAction : true,
+            input : action.input,
             outPutData: action.data          
           });
 
@@ -121,7 +168,7 @@ function changeInput(state = searchInitialData, action){
         case('SELECT_CHANGE'):              
         //console.log(action.selectValue);        
           return Object.assign({},state,{
-            isSearchAction : action.selectValue
+            selectValue : action.selectValue
           });   
 
         case('CHANGE_PAGE'):
@@ -139,7 +186,8 @@ function changeInput(state = searchInitialData, action){
         case('UPDATE_URL_SEARCH_LIST'):
           return Object.assign({},state,{
             input:action.text,
-            outPutData: action.data           
+            outPutData: action.data,
+            isSearchAction:false           
           });  
 
          

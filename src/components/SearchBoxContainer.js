@@ -31,12 +31,12 @@ import axios from 'axios';
   const mapDispatchToProps = (dispatch) => {
     return {
 
-      onChangeInput:(input) => {        
+      onChangeInput:(input) => {  
         dispatch(changeInput(input));
       },
 
       onSearchByText:(input,selected,paged) =>{       
-
+  
         axios.post('http://127.0.0.1:3000/api/search',{
           query: input,
           option:selected,
@@ -46,7 +46,7 @@ import axios from 'axios';
          }).then(function(res){
            
           console.log(res);
-          dispatch(seachActionT(res.data));
+          dispatch(seachActionT(input,res.data));
   
         }).catch(function (error) {
           console.log(error);

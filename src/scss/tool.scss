@@ -1,0 +1,16 @@
+mark.yellow {
+	background: linear-gradient(transparent 40%,rgba(255,255,255,0) 40%, #FFF176 90%,transparent 95%);	
+    padding: 2px 1px;
+}
+mark.green {
+	background:linear-gradient(transparent 40%,rgba(255,255,255,0) 40%, #CCFF90 50%,transparent 70%);	
+    padding: 2px 1px;
+}
+mark.pink {
+	border-bottom: 3px solid #EC407A;
+	background: none;
+	margin: 0 -2px;
+	padding: 0 2px;
+}
+
+.MuiBackdrop-root{ z-index:6 ! important; }

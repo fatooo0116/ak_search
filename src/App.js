@@ -25,12 +25,12 @@ let store = createStore(reducer);
 
 const Child = ({ match }) => (
   <div>   
-    <SearchDetailContainer pid={match.params.id} />
+    <SearchDetailContainer pid={match.params.id}  path={match} />
   </div>
 )
 
 const ChildSearch = ({ match })=>(
-  <SearchListContainer pid={match.params.id} />
+  <SearchListContainer pid={match.params.id}  path={match} />
 )
 
 
