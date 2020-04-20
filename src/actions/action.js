@@ -8,6 +8,31 @@ export const MINUS = 'MINUS';
 // action creators
 
 
+export function changeDetailPage(status){
+    return {
+        type:'CHANGE_DETAIL_PAGE',
+        status:status
+    }
+}
+
+export function showMiniDetailPage(data){
+    return {
+        type:'MINI_DETAIL_PAGE',
+        data:data
+    }
+}
+
+
+
+
+export function tab_change(page){
+    return {
+        type:'TAB_CHANGE',
+        page:page
+    }
+}
+
+
 
 export function detail_model_open(text){
     return {
@@ -23,11 +48,7 @@ export function detail_model_close(){
 }
 
 
-export function remove_ad_text(){
-    return {
-        type:'REMOVE_AD_TEXT',        
-    }
-}
+
 
 export function detail_load_begin(){
     return {
@@ -62,15 +83,40 @@ export function load_end(){
 
 
 
-export function dvanceSearch(ad_text,input,data,paged){
+export function advanceLawSearch(ad_law_text,input,data,paged){
     return {
-        type:'ADVANCE_SEARCH',
-        ad_text:ad_text,
+        type:'ADVANCE_LAW_SEARCH',
+        ad_law_text: ad_law_text,
         input:input,
         data:data,
         paged:paged
     }
 }
+
+export function advanceElementSearch(ad_element_text,input,data,paged){
+    return {
+        type:'ADVANCE_ELEMENT_SEARCH',
+        ad_element_text: ad_element_text,
+        input:input,
+        data:data,
+        paged:paged
+    }
+}
+
+
+export function removeAdElement(key){
+    return {
+        type:'REMOVE_AD_ELEMENT',
+    }
+}
+
+
+export function removeAdLaw(key){
+    return {
+        type:'REMOVE_AD_LAW',
+    }
+}
+
 
 
 
@@ -172,6 +218,7 @@ export function add(){
 
 
 
+
 export function initPageData(data){
     return {
         type: 'PAGE_INIT',
@@ -179,11 +226,11 @@ export function initPageData(data){
     }
 }
 
-export function pageDetailMark(data,main_text){
+export function pageDetailMark(label,pos){
     return {
         type: 'PAGE_DETAIL_MARK',
-        data:data,
-        main_text:main_text
+        label:label,
+        pos:pos
     }
 }
 
@@ -195,3 +242,10 @@ export function sub(){
         num : 1
     }
 };
+
+export function changeWindowScroll(data){
+    return {
+        type: 'PAGE_SCROLL',
+        data:data        
+    }
+}

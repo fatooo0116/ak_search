@@ -26,8 +26,13 @@ class ReactHome extends React.Component {
 
         return (
           <div className="search_home">
+            <div className="home_nav">
+              <img src="/xlogo.png"/>
+            </div>
+
                     <form     className="main_search"  onSubmit={(e)=> {e.preventDefault(); this.props.onHomeSearchSubmit(this.props.input, this.props.selectValue) }} >
-                      <div className="search_box">    
+                    <h1 className="main">裁判書搜尋系統</h1>
+                      <div className="search_box">                              
                           <TextField id="outlined-basic"   value={this.props.input}   onChange={ (e) => this.props.onTextChange(e.target.value) }  className="main_search_input" label="" variant="outlined" />
                           <FormControl >
                               <Select  id="search_slk" value={this.props.selectValue}  onChange={(e) => this.props.onSelectChange(e.target.value) }>

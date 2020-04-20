@@ -1,0 +1,12 @@
+version: '3'
+services:
+
+    web:
+      build: . 
+      container_name: de_id_web
+      restart: always        
+      ports:
+            - "3000:3000"
+  
+      command: /bin/bash -c "node server.js"
+     

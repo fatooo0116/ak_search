@@ -1,6 +1,13 @@
 
 import { connect } from 'react-redux'
-import { selectChange ,changeInput,seachActionT,seachActionF } from '../actions/action.js';
+import { 
+          selectChange,
+          changeInput,
+          seachActionT,
+          seachActionF,
+          load_end,
+          load_begin
+        } from '../actions/action.js';
 import SearchBox from './SearchBox';
  
 import axios from 'axios';
@@ -35,9 +42,10 @@ import axios from 'axios';
         dispatch(changeInput(input));
       },
 
-      onSearchByText:(input,selected,paged) =>{       
-  
-        axios.post('http://127.0.0.1:3000/api/search',{
+      onSearchByText:(input,selected,paged) =>{     
+
+        dispatch(load_begin());
+        axios.post('/api/search',{
           query: input,
           option:selected,
           page:paged
@@ -45,7 +53,8 @@ import axios from 'axios';
            headers: headers
          }).then(function(res){
            
-          console.log(res);
+          // console.log(res);
+          dispatch(load_end());
           dispatch(seachActionT(input,res.data));
   
         }).catch(function (error) {

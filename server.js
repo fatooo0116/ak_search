@@ -66,30 +66,30 @@ app.post('/api/search',(req, res) => {
 
 
 
-app.post('/api/f_search',(req, res) => {
+
+app.post('/api/f_search_law',(req, res) => {
 
       const headers = {
          'Content-Type': 'application/json',     
       }    
     
-      console.log('advance Search request');
-
 
       var query = (req.body.query)? req.body.query: '';
       var option = (req.body.option)? req.body.option : 'text';
       var paged = (req.body.page)? req.body.page - 1  : 0;
       var alaw = (req.body.alaw)? req.body.alaw : '';
+      var history = (req.body.history )? req.body.history : [];
      
       axios.post('http://23.97.66.207:6000/f_search',{
         query: query,
         option: option,
         page: paged,
         law:alaw,
-        history:[]
+        history:history
       },{
          headers: headers
        }).then(function(resx){
-  
+        console.log('advance Search Law end');
 
         res.send(resx.data);
         
@@ -100,6 +100,47 @@ app.post('/api/f_search',(req, res) => {
 
       //return 'OK';
 });
+
+
+
+
+
+app.post('/api/f_search_element',(req, res) => {
+
+  const headers = {
+     'Content-Type': 'application/json',     
+  }    
+
+  // console.log('advance element start');
+
+  var query = (req.body.query)? req.body.query: '';
+  var option = (req.body.option)? req.body.option : 'text';
+  var paged = (req.body.page)? req.body.page - 1  : 0;
+  var alaw = (req.body.alaw)? req.body.alaw : '';
+  var history = (req.body.history )? req.body.history : [];
+
+  axios.post('http://23.97.66.207:6000/f_search',{
+    query: query,
+    option: option,
+    page: paged,
+    element:alaw,
+    history: history
+  },{
+     headers: headers
+   }).then(function(resx){
+
+    console.log('advance element end');
+    res.send(resx.data);
+    
+  }).catch(function (error) {
+     console.log(error);
+  });
+  
+
+  //return 'OK';
+});
+
+
 
 
 

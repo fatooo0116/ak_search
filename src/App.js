@@ -17,8 +17,7 @@ import {
 } from "react-router-dom";
 
 
-let lastScrollY = 0;
-let ticking = false;
+
 
 let store = createStore(reducer);
 
@@ -39,26 +38,8 @@ class App extends React.Component {
 
 
 
-  componentDidMount(){
-    window.addEventListener('scroll', this.handleScroll);
-  }
 
-  componentWillUnmount() {
-      window.removeEventListener('scroll', this.handleScroll);
-  }
 
-  handleScroll = (event) => {
-     lastScrollY = window.scrollY;
-
-    if (!ticking) {
-      window.requestAnimationFrame(() => {
-      //  console.log(lastScrollY);
-        ticking = false;
-      });
-    }
-   
-      ticking = true;
-  }
 
 
   render(){
