@@ -58,7 +58,8 @@ class SearchList extends React.Component{
     var xpagination = '';
     let listTotal = '';
     let tooksec = '';
-
+    let allElementsCount = 0;
+    let allLawsCount = 0;
     if(this.props.listData.hasOwnProperty('hits')){
      
 
@@ -74,43 +75,51 @@ class SearchList extends React.Component{
       });
 
 
+      let temp1 = [];
+      me.props.ad_element_text.forEach(function(initem){
+        temp1.push(initem.value);
+      });
 
-
+      allElementsCount = this.props.listData.aggregations.count_stats_element.buckets.length;
       this.props.listData.aggregations.count_stats_element.buckets.forEach(function(item,i){
-      
-          
+                 
            /*  remove the tagged key */
-           if(!me.props.ad_element_text.includes(item.key)){
-            state_element.push(                        
-              <ListItem key={item.key}  button onClick={() => me.props.advanceElementSearch(
-                                                                              item.key,
-                                                                              me.props.ad_element_text,
-                                                                              me.props.keyinput,
-                                                                              me.props.selectValue
-                                                                              )} >
-                  <ListItemText primary={item.key} />
-              </ListItem>
-            );
-           }
-        
-        
+           if(!temp1.includes(item.key)){
+
+              state_element.push(                        
+                <ListItem key={item.key}  button onClick={() => me.props.advanceElementSearch(
+                                                                                item.key,
+                                                                                me.props.ad_element_text,
+                                                                                me.props.ad_law_text,
+                                                                                me.props.keyinput,
+                                                                                me.props.selectValue
+                                                                                )} >
+                    <ListItemText primary={item.key} />
+                </ListItem>
+              );
+           };        
       });
 
 
       
-
+      let temp2 = [];
+      me.props.ad_law_text.forEach(function(initem){
+        temp2.push(initem.value);
+      });
+      allLawsCount = this.props.listData.aggregations.count_stats_law.buckets.length;
       this.props.listData.aggregations.count_stats_law.buckets.forEach(function(item,i){
 
        
-          if(!me.props.ad_law_text.includes(item.key)){
+        if(!temp2.includes(item.key)){
             state_law.push(
                 <ListItem key={item.key}  button onClick={() => me.props.advanceLawSearch(
                                                                                 item.key,
+                                                                                me.props.ad_element_text,
                                                                                 me.props.ad_law_text,
                                                                                 me.props.keyinput,
                                                                                 me.props.selectValue
                                                                                 ) } >
-                            <ListItemText primary={item.key+" ("+item.doc_count+")"} />
+                            <ListItemText primary={item.key} />
                 </ListItem>
             );
           }
@@ -124,34 +133,43 @@ class SearchList extends React.Component{
       let  pageValue = (this.props.pageValue) ? this.props.pageValue:1;
 
        
-       xpagination  = (allpage)? <Pagination count={allpage}  page={pageValue}  variant="outlined" shape="rounded" onChange={(page ,value)=> {  me.props.changePage(value, me.props.keyinput, me.props.selectValue, me.props.ad_element_text ,me.props.ad_law_text);} }  /> :'' ;
+       xpagination  = (allpage)? <Pagination count={allpage}  page={pageValue}  variant="outlined" shape="rounded" onChange={(page ,value)=> {  
+                                                                                                                                me.props.changePage( 
+                                                                                                                                                    value, 
+                                                                                                                                                    me.props.keyinput, 
+                                                                                                                                                    me.props.selectValue, 
+                                                                                                                                                    me.props.ad_element_text,                                                                                                                                                      
+                                                                                                                                                    me.props.ad_law_text,
+                                                                                                                                                    me.props.total_law_element_key );} }  /> :'' ;
        listTotal = me.props.listData.hits.total.value;
        tooksec = me.props.listData.took/1000;
      }
 
    
-     
+   
+   let ad_elements = [];
+   this.props.ad_element_text.forEach(function(item){
+     ad_elements.push(<Chip label={item.value} onDelete={() =>{ me.props.removeAdElement( 
+                                                                                          item, 
+                                                                                          me.props.ad_element_text,
+                                                                                          me.props.ad_law_text,
+                                                                                          me.props.keyinput, 
+                                                                                          me.props.selectValue 
+                                                                                          ); }} color="primary" />);
+   });
 
-     /*
-     this.props.listData.aggregations.count_stats_element.buckets.forEach(function(item){
-      console.log(item);
-     });
-     */
-
- 
-
-
-
-
-    let ad_elements = [];
-    this.props.ad_element_text.forEach(function(item){
-      ad_elements.push(<Chip label={item} onDelete={() =>{ me.props.removeAdElement(item, me.props.ad_element_text, me.props.keyinput, me.props.selectValue); }} color="primary" />);
-    });
-
+    
     let ad_laws = [];
     this.props.ad_law_text.forEach(function(item){
-      ad_laws.push(<Chip label={item} onDelete={() =>{  me.props.removeAdLaw(item, me.props.ad_law_text, me.props.keyinput,me.props.selectValue); }} color="primary" />);
+      ad_laws.push(<Chip label={item.value} onDelete={() =>{  me.props.removeAdLaw(
+                                                                                      item, 
+                                                                                      me.props.ad_element_text,
+                                                                                      me.props.ad_law_text,
+                                                                                      me.props.keyinput, 
+                                                                                      me.props.selectValue 
+                                                                                      ); }} color="primary" />);
     });
+    
 
 
    
@@ -180,13 +198,13 @@ class SearchList extends React.Component{
                   { (ad_elements.length > 0 ) ?  
                       <div className="tags law1">{ ad_elements }</div> : ''  }   
                               
-                  { (state_element.length > 0 ) ?  <Card className="fx1" ><CardContent><h3>相關要件</h3><div className="ibox">{state_element}</div> <Button variant="outlined" size="small" color="primary">READ MORE</Button> </CardContent></Card> : '' }
+                  { (state_element.length > 0 ) ?  <Card className="fx1" ><CardContent><h3>相關要件({allElementsCount})</h3><div className={(me.props.tag1_open)? 'ibox op' : 'ibox'} >{state_element}</div> <Button variant="outlined"  onClick={() => this.props.tag1_openfn(!this.props.tag1_open) } size="small" color="primary">{(me.props.tag1_open)? 'CLOSE':'READ MORE'}</Button> </CardContent></Card> : '' }
 
 
                   { (ad_laws.length > 0 ) ?  
                       <div className="tags law2">{ ad_laws }</div> : ''  }   
 
-                  { (state_law.length > 0 ) ?  <Card className="fx2" ><CardContent><h3>相關法條</h3><div className="ibox">{state_law} </div> <Button variant="outlined" size="small" color="primary">READ MORE</Button> </CardContent></Card> : '' }
+                  { (state_law.length > 0 ) ?  <Card className="fx2" ><CardContent><h3>相關法條({allLawsCount})</h3><div className={(me.props.tag2_open)? 'ibox op' : 'ibox'}>{state_law} </div> <Button variant="outlined" onClick={() => this.props.tag2_openfn(!this.props.tag2_open) } size="small" color="primary">{(me.props.tag2_open)? 'CLOSE':'READ MORE'}</Button> </CardContent></Card> : '' }
                   
               </div> { /*  filter  */  }
             </div> { /*  inner  */  }

@@ -14,8 +14,11 @@ const searchInitialData = {
   pageValue:0,
   ad_law_text:[],
   ad_element_text:[],
+  total_law_element_key:[],
   is_advance_search:false,
-  loading_status:false
+  loading_status:false,
+  tag1_open:false,
+  tag2_open:false
 }
 
 const pageData = {
@@ -174,6 +177,16 @@ function pageInit(state = pageData, action){
 function changeInput(state = searchInitialData, action){
     switch(action.type){
 
+        case('TAG1_OPEN'):
+          return Object.assign({},state,{
+            tag1_open: action.status,          
+          });
+
+        case('TAG2_OPEN'):
+          return Object.assign({},state,{
+            tag2_open: action.status,          
+          });  
+
         case('LOADING_ACTION'):
           return Object.assign({},state,{
             loading_status: action.status,          
@@ -186,11 +199,24 @@ function changeInput(state = searchInitialData, action){
           });  
       
 
+        case('ADVANCE_ELEMENT_LAW_SEARCH'):
+          return Object.assign({},state,{  
+
+            ad_element_text: action.element,
+            ad_law_text: action.law,
+            total_law_element_key:action.totalTag,
+            input : action.input,
+            outPutData:action.data,
+            pageValue: action.paged
+          });
+
+
+          /*
         case('ADVANCE_LAW_SEARCH'):
-          // let new_law = [action.ad_law_text, ...state.ad_law_text];
-          console.log(action.ad_law_text);
+
           return Object.assign({},state,{
-            ad_element_text:[],
+         
+           total_law_element_key: action.total_law_element_key,
             ad_law_text: action.ad_law_text,
             input : action.input,
             outPutData:action.data,
@@ -199,14 +225,15 @@ function changeInput(state = searchInitialData, action){
 
 
         case('ADVANCE_ELEMENT_SEARCH'):
-          // let new_elemnet = [action.ad_law_element, ...state.ad_law_element];
+          
           return Object.assign({},state,{
-            ad_element_text : action.ad_element_text,
-            ad_law_text:[],
-            input : action.input,
+             total_law_element_key: action.total_law_element_key,
+             ad_element_text : action.ad_element_text,           
+             input : action.input,
              outPutData:action.data,
-            pageValue: action.paged
+             pageValue: action.paged
           });          
+          */
 
 
         case('REMOVE_AD_ELEMENT'):           

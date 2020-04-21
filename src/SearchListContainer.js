@@ -1,6 +1,16 @@
 
 import { connect } from 'react-redux'
-import {changePage,advanceLawSearch,advanceElementSearch,updateUrlSearchList,load_begin,load_end,remove_ad_text,removeAdElement,removeAdLaw} from './actions/action.js';
+import { 
+          changePage,
+          advanceElementLawSearch,
+          updateUrlSearchList,
+          load_begin,load_end,
+          remove_ad_text,
+          removeAdElement,
+          removeAdLaw,
+          tag1_openfn,
+          tag2_openfn
+        } from './actions/action.js';
 import SearchList from './SearchList';
 import axios from 'axios';
 
@@ -17,7 +27,10 @@ import axios from 'axios';
         is_advance_search: state.changeInput.is_advance_search,
         ad_law_text: state.changeInput.ad_law_text,
         ad_element_text: state.changeInput.ad_element_text,
-        loading_status:state.changeInput.loading_status,        
+        total_law_element_key: state.changeInput.total_law_element_key,
+        loading_status:state.changeInput.loading_status, 
+        tag1_open:state.changeInput.tag1_open,  
+        tag2_open:state.changeInput.tag2_open,     
       }
     }
   
@@ -61,109 +74,108 @@ import axios from 'axios';
 
 
 
-      changePage:(paged,key,selectValue,ad_element,ad_law) => {
+      changePage:(paged,key,selectValue,ad_element,ad_law,total_law_element_key) => {
 
-          if(ad_element.length>0){
-            console.log("tag_element");
+        
+        // console.log(total_law_element_key);
 
-            axios.post('/api/f_search_element',{
-              query: key,
-              option:selectValue,
-              page:paged,
-              alaw: ad_element[0],
-              history: ad_element.slice(1)
-            },{
-              headers: headers
-            }).then(function(res){  
-              
-              dispatch(advanceElementSearch(ad_element, key,res.data,paged));
-              dispatch(changePage(paged));
-              dispatch(load_end());
+          if(total_law_element_key.length>0){            
+           
+              axios.post('/api/f_search',{
+                query: key,
+                option:selectValue,
+                page:paged,
+                alaw: total_law_element_key[0],
+                history:total_law_element_key.slice(1)
+              },{
+                headers: headers
+              }).then(function(res){  
 
-            }).catch(function (error) {
-              console.log(error);
-            });               
+                // dispatch(advanceLawSearch(ad_law,key,res.data,paged));
+                dispatch(advanceElementLawSearch( 
+                                                ad_element, 
+                                                ad_law,
+                                                total_law_element_key, 
+                                                key, 
+                                                res.data,
+                                                paged)); 
 
-          }else if(ad_law.length>0){
+                dispatch(changePage(paged));
+                dispatch(load_end());
 
-            console.log("tag_law");
-            axios.post('/api/f_search_law',{
-              query: key,
-              option:selectValue,
-              page:paged,
-              alaw: ad_law[0],
-              history:ad_law.slice(1)
-            },{
-              headers: headers
-            }).then(function(res){  
-              
-              dispatch(advanceLawSearch(ad_law,key,res.data,paged));
-              dispatch(changePage(paged));
-              dispatch(load_end());
-
-            }).catch(function (error) {
-              console.log(error);
-            });              
+              }).catch(function (error) {
+                console.log(error);
+              });              
 
 
           }else{ /* no Tag  */
-            // console.log("No Tag");
+           
 
-            dispatch(load_begin());
-            axios.post('/api/search',{
-              query: key,
-              option:selectValue,
-              page:paged
-            },{
-              headers: headers
-            }).then(function(res){   
-                dispatch(updateUrlSearchList(key,res.data));            
-                dispatch(changePage(paged));
-                dispatch(load_end());
-            }).catch(function (error) {
-              console.log(error);
-            });               
-          }
-       
+              dispatch(load_begin());
+              axios.post('/api/search',{
+                query: key,
+                option:selectValue,
+                page:paged
+              },{
+                headers: headers
+              }).then(function(res){   
+                  dispatch(updateUrlSearchList(key,res.data));            
+                  dispatch(changePage(paged));
+                  dispatch(load_end());
+              }).catch(function (error) {
+                console.log(error);
+              });               
+          }       
       },
 
 
 
 
-        /*  相關要件 進階  */
-        advanceElementSearch:(advanceKey,allAdvanceKey,keyinput,selectValue) =>{
-              
-              // console.log(advanceKey);
-              let newAdKey = [advanceKey, ...allAdvanceKey];
 
-              // console.log(newAdKey.slice(1));                          
-                                         
+
+
+
+
+        /*  相關要件 進階  */
+        advanceElementSearch:(advanceKey,allElementKey,allLawKey,keyinput,selectValue) =>{
+
+          
+              let obj = {
+                'id':'element',
+                'value':advanceKey
+              };
+              let total_law_element_key = [obj, ...allElementKey, ...allLawKey];                      
+               
+
+
+                          
               dispatch(load_begin());
              
               const headers = {
                 'Content-Type': 'application/json',     
-              }   
-              
+              }                 
          
-              axios.post('/api/f_search_element',{
+              axios.post('/api/f_search',{
                 query: keyinput,
                 option:selectValue,
                 page:1,
-                alaw: newAdKey[0],
-                history:newAdKey.slice(1)
+                alaw: total_law_element_key[0],
+                history:total_law_element_key.slice(1)
               },{
                 headers: headers
               }).then(function(res){  
-                console.log(res);
-                dispatch(advanceElementSearch(newAdKey, keyinput,res.data,1));
+               // console.log(res);
+
+                dispatch(advanceElementLawSearch([obj, ...allElementKey],allLawKey ,total_law_element_key, keyinput, res.data,1));  
+                
                 dispatch(changePage(1));
                 dispatch(load_end());
 
               }).catch(function (error) {
                 console.log(error);
               });       
-              
-                    
+
+                                                
         },
 
 
@@ -171,23 +183,36 @@ import axios from 'axios';
 
 
         /*  相關法條 進階  */
-        advanceLawSearch:(advanceKey,allAdvanceKey,keyinput,selectValue) =>{
+        advanceLawSearch:(advanceKey,allElementKey,allLawKey,keyinput,selectValue) =>{
 
-              let newAdKey = [advanceKey, ...allAdvanceKey];
+
+
+              let obj = {
+                id:"law",
+                value:advanceKey
+              }
+              let total_law_element_key = [obj,...allLawKey, ...allElementKey]; 
+
+            //  console.log(allElementKey);
+            //  console.log(allLawKey);
+            //  console.log(newAdKeyArray);
+           // console.log(total_law_element_key);
               
               dispatch(load_begin());
 
-              axios.post('/api/f_search_law',{
+              axios.post('/api/f_search',{
                 query: keyinput,
                 option:selectValue,
                 page:1,
-                alaw: newAdKey[0],
-                history:newAdKey.slice(1)
+                alaw: total_law_element_key[0],
+                history: total_law_element_key.slice(1)
               },{
                 headers: headers
               }).then(function(res){  
                 
-                dispatch(advanceLawSearch(newAdKey,keyinput,res.data,1));
+                dispatch(advanceElementLawSearch(allElementKey,[obj,...allLawKey] ,total_law_element_key, keyinput, res.data,1));  
+
+                // dispatch(advanceLawSearch([obj,...allLawKey],total_law_element_key,keyinput,res.data,1));
                 dispatch(changePage(1));
                 dispatch(load_end());
 
@@ -202,14 +227,18 @@ import axios from 'axios';
 
 
 
-        removeAdElement:(adKey,alladkey,key,selectValue) =>{
+        removeAdElement:(adKey,elementKey,lawKey,key,selectValue) =>{
 
-            console.log(alladkey);
+           
 
-           let newAllkey = alladkey.filter(key => key != adKey);
+           let newElement = elementKey.filter(item => item.value != adKey.value);            
+          
+           let newAllkey = (newElement.length==0)? [...lawKey] : [...newElement].concat([...lawKey]);;
+          
+
 
            if(newAllkey.length>0){
-              axios.post('/api/f_search_element',{
+              axios.post('/api/f_search',{
                 query: key,
                 option:selectValue,
                 page:1,
@@ -218,8 +247,11 @@ import axios from 'axios';
               },{
                 headers: headers
               }).then(function(res){  
-                console.log(res);
-                dispatch(advanceElementSearch(newAllkey, key,res.data,1));
+               //  console.log(res);
+                
+                
+                dispatch(advanceElementLawSearch(newElement,lawKey,newAllkey, key,res.data,1));                               
+
                 dispatch(changePage(1));
                 dispatch(load_end());
     
@@ -235,7 +267,9 @@ import axios from 'axios';
               },{
                 headers: headers
               }).then(function(res){   
-                  dispatch(updateUrlSearchList(key,res.data));  
+                //  dispatch(updateUrlSearchList(key,res.data));  
+
+                  dispatch(advanceElementLawSearch([],[],[], key,res.data,1)); 
   
                   dispatch(removeAdElement());          
   
@@ -253,12 +287,17 @@ import axios from 'axios';
 
 
 
-        removeAdLaw:(adKey,alladkey,key,selectValue) =>{
+        removeAdLaw:(adKey,elementKey,lawKey,key,selectValue) =>{
 
-          let newAllkey2 = alladkey.filter(key => key != adKey);
+          let newLaw = lawKey.filter(item => item.value != adKey.value);
+
+          let newAllkey2 = (newLaw.length==0)? [...elementKey] : [...newLaw].concat([...elementKey]);
+        
+          // console.log(newAllkey2);
+       
 
           if(newAllkey2.length>0){
-            axios.post('/api/f_search_law',{
+            axios.post('/api/f_search',{
               query: key,
               option:selectValue,
               page:1,
@@ -267,8 +306,11 @@ import axios from 'axios';
             },{
               headers: headers
             }).then(function(res){  
-              console.log(res);
-              dispatch(advanceLawSearch(newAllkey2, key,res.data,1));
+              // console.log(res);
+
+              dispatch(advanceElementLawSearch(elementKey,newLaw ,newAllkey2, key, res.data,1));   
+                                          
+              
               dispatch(changePage(1));
               dispatch(load_end());
   
@@ -285,7 +327,8 @@ import axios from 'axios';
             },{
               headers: headers
             }).then(function(res){   
-                dispatch(updateUrlSearchList(key,res.data));  
+                // dispatch(updateUrlSearchList(key,res.data));  
+                dispatch(advanceElementLawSearch([],[],[], key,res.data,1)); 
 
                 dispatch(removeAdLaw());          
 
@@ -296,8 +339,16 @@ import axios from 'axios';
             }); 
          }
 
-       }
-       
+       },
+
+
+       tag1_openfn:(status) =>{
+          dispatch(tag1_openfn(status));     
+       },
+
+       tag2_openfn:(status) =>{
+         dispatch(tag2_openfn(status));     
+       },
        
 
 

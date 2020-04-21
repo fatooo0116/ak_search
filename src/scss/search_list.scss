@@ -136,8 +136,8 @@
                }
                .MuiListItem-gutters{
                     padding: 0 5px;
-                    line-height: 25px;
-                    height: 50px;            
+                    line-height: 20px;
+                    height: 40px;            
                }
                .MuiListItemText-root{
                    margin-top:0;
@@ -165,7 +165,7 @@
 
                    
                     .ibox{
-                        height:250px;
+                        height:200px;
                         overflow: hidden;
                         &.op{
                             height:auto;
@@ -173,6 +173,7 @@
                     }
                     button{
                         margin:auto;
+                        display:block;
                     }
                 
     
@@ -190,7 +191,7 @@
                }
                .MuiTypography-body1,
                .MuiTypography-body2{
-                   font-size:15px;
+                   font-size:14px;
                }
             }
         }

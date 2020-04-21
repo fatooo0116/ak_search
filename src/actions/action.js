@@ -8,6 +8,21 @@ export const MINUS = 'MINUS';
 // action creators
 
 
+export function tag1_openfn(status){
+    return {
+        type:'TAG1_OPEN',
+        status:status
+    }
+}
+
+export function tag2_openfn(status){
+    return {
+        type:'TAG2_OPEN',
+        status:status
+    }
+}
+
+
 export function changeDetailPage(status){
     return {
         type:'CHANGE_DETAIL_PAGE',
@@ -82,26 +97,42 @@ export function load_end(){
 }
 
 
-
-export function advanceLawSearch(ad_law_text,input,data,paged){
+export function advanceElementLawSearch(element, law, totalTag, key, data, paged){
     return {
-        type:'ADVANCE_LAW_SEARCH',
+        type:'ADVANCE_ELEMENT_LAW_SEARCH',        
+        element:element,
+        law:law,        
+        input:key,
+        totalTag:totalTag,
+        data:data,
+        paged:paged
+    }
+}
+
+
+/*
+export function advanceLawSearch(ad_law_text,total_law_element_key,input,data,paged){
+    return {
+        type:'ADVANCE_LAW_SEARCH',        
         ad_law_text: ad_law_text,
+        total_law_element_key:total_law_element_key,
         input:input,
         data:data,
         paged:paged
     }
 }
 
-export function advanceElementSearch(ad_element_text,input,data,paged){
+export function advanceElementSearch(ad_element_text,total_law_element_key,input,data,paged){
     return {
         type:'ADVANCE_ELEMENT_SEARCH',
         ad_element_text: ad_element_text,
+        total_law_element_key:total_law_element_key,
         input:input,
         data:data,
         paged:paged
     }
 }
+*/
 
 
 export function removeAdElement(key){
